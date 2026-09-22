@@ -4,53 +4,73 @@
   <title>GeneGuard AI</title>
 </head>
 
-<body style="margin:0;background:#0B1020;color:white;font-family:Arial;">
+<body style="margin:0;background:#0B1020;color:white;font-family:Arial;padding:20px;">
 
-  <div style="background:#6D28D9;padding:20px;text-align:center;">
+  <div style="background:#6D28D9;padding:20px;border-radius:15px;text-align:center;">
     <h1>🧬 GeneGuard AI</h1>
     <p>AI-powered Genetic Health & Nutrition Intelligence Platform</p>
   </div>
 
-  <div style="padding:20px;">
+  <h2 style="color:#A78BFA;">⚖ BMI Calculator</h2>
+  <input id="weight" type="number" placeholder="Weight (kg)" style="padding:10px;border-radius:8px;"><br><br>
 
-    <div style="background:#1E293B;padding:20px;border-radius:15px;margin-bottom:15px;">
-      <h2>⚖ BMI Calculator</h2>
-      <p>Check your body health instantly.</p>
-    </div>
+  <input id="height" type="number" placeholder="Height (m)" style="padding:10px;border-radius:8px;"><br><br>
 
-    <div style="background:#1E293B;padding:20px;border-radius:15px;margin-bottom:15px;">
-      <h2>🩸 Anemia Risk Prediction</h2>
-      <p>Predict health risk using hemoglobin level.</p>
-    </div>
-    <div style="background:#1E293B;padding:20px;border-radius:15px;margin-bottom:15px;">
-      <h2>🥗 AI Diet Planner</h2>
-      <p>Get personalized nutrition suggestions.</p>
-    </div>
+  <button onclick="calculateBMI()" style="background:#8B5CF6;color:white;padding:10px 20px;border:none;border-radius:8px;">
+    Calculate BMI
+  </button>
 
-    <div style="background:#1E293B;padding:20px;border-radius:15px;margin-bottom:15px;">
-      <h2>💧 Water Intake Tracker</h2>
-      <p>Daily Goal: 2.5 Litres</p>
-    </div>
+  <p id="result"></p>
 
-    <div style="background:#312E81;padding:20px;border-radius:15px;text-align:center;">
-      <h2>📊 Health Score</h2>
-      <h1 style="color:#A78BFA;">92%</h1>
-      <button style="background:#8B5CF6;color:white;padding:12px 20px;border:none;border-radius:8px;">
-        Get AI Health Report
-      </button>
-    </div>
+  <hr>
 
-  </div>
+  <h2 style="color:#F87171;">🩸 Anemia Risk Predictor</h2>
+  <input id="hb" type="number" placeholder="Hemoglobin (g/dL)" style="padding:10px;border-radius:8px;"><br><br>
+
+  <button onclick="checkAnemia()" style="background:#DC2626;color:white;padding:10px 20px;border:none;border-radius:8px;">
+    Check Anemia Risk
+  </button>
+
+  <p id="anemiaResult"></p>
+
+  <hr>
+
+  <h2 style="color:#22C55E;">🥗 AI Diet Recommendation</h2>
+  <p id="diet">Eat protein-rich vegetarian food, fruits and green vegetables.</p>
+
+  <hr>
+
+  <h2 style="color:#38BDF8;">💧 Water Intake Tracker</h2>
+  <p>Daily Goal: <b>2.5 Litres</b></p>
+
+  <hr>
+
+  <h2 style="color:#C084FC;">📊 Health Score</h2>
+  <h1>92%</h1>
+
   <script>
-function calculateBMI() {
-  let weight = parseFloat(document.getElementById("weight").value);
-  let height = parseFloat(document.getElementById("height").value);
+    function calculateBMI() {
+      let w = parseFloat(document.getElementById("weight").value);
+      let h = parseFloat(document.getElementById("height").value);
 
-  let bmi = weight / (height * height);
-  document.getElementById("result").innerHTML =
-    "Your BMI: " + bmi.toFixed(2);
-}
-</script>
+      let bmi = w / (h * h);
+
+      document.getElementById("result").innerHTML =
+        "Your BMI is " + bmi.toFixed(2);
+    }
+
+    function checkAnemia() {
+      let hb = parseFloat(document.getElementById("hb").value);
+
+      if (hb < 11) {
+        document.getElementById("anemiaResult").innerHTML = "🔴 High Anemia Risk";
+      } else if (hb < 12) {
+        document.getElementById("anemiaResult").innerHTML = "🟠 Medium Anemia Risk";
+      } else {
+        document.getElementById("anemiaResult").innerHTML = "🟢 Low Anemia Risk";
+      }
+    }
+  </script>
 
 </body>
 </html>
