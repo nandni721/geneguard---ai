@@ -1,0 +1,7 @@
+Age,Gender,Height_cm,Weight_kg,Hemoglobin,Water_Intake_Liters,Risk
+19,Female,158,45,10.8,1.5,High Anemia Risk
+20,Female,160,52,12.4,2.3,Healthy
+21,Male,170,70,13.8,2.8,Healthy
+22,Female,155,42,9.9,1.2,High Anemia Risk
+23,Male,172,60,11.5,1.8,Medium Risk
+24,Female,162,49,12.0,2.0,Low Risk
