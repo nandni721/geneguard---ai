@@ -42,6 +42,16 @@
     </div>
 
   </div>
+  <script>
+function calculateBMI() {
+  let weight = parseFloat(document.getElementById("weight").value);
+  let height = parseFloat(document.getElementById("height").value);
+
+  let bmi = weight / (height * height);
+  document.getElementById("result").innerHTML =
+    "Your BMI: " + bmi.toFixed(2);
+}
+</script>
 
 </body>
 </html>
