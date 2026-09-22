@@ -1,17 +1,27 @@
-print("🧬 Welcome to GeneGuard AI")
+print("🧬 GeneGuard AI - Health Risk Checker")
 
 name = input("Enter your name: ")
 weight = float(input("Weight (kg): "))
 height = float(input("Height (m): "))
+hb = float(input("Hemoglobin (g/dL): "))
 
 bmi = weight / (height * height)
 
-print("Hello", name)
-print("Your BMI is:", round(bmi, 2))
+print("\nHello", name)
+print("BMI:", round(bmi, 2))
 
+# BMI Result
 if bmi < 18.5:
-    print("Status: Underweight")
+    print("BMI Status: Underweight")
 elif bmi < 25:
-    print("Status: Healthy")
+    print("BMI Status: Healthy")
 else:
-    print("Status: Overweight")
+    print("BMI Status: Overweight")
+
+# Anemia Risk
+if hb < 11:
+    print("Anemia Risk: HIGH 🔴")
+elif hb < 12:
+    print("Anemia Risk: MEDIUM 🟠")
+else:
+    print("Anemia Risk: LOW 🟢")
