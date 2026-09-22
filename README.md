@@ -14,3 +14,9 @@ AI-powered Genetic Health & Nutrition Intelligence Platform
 - FastAPI
 - React
 - Machine Learning
+## Future Features
+
+- Genetic Disease Risk Prediction
+- Personalized Nutrition using AI
+- Weekly Health Progress Charts
+- AI Health Dashboard
