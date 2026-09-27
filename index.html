@@ -101,6 +101,18 @@ font-size:13px;
 </div>
 
 <div class="card">
+  <div class="card">
+  <h2>💧 Water Tracker</h2>
+  <button onclick="addGlass()">+1 Glass</button>
+  <p id="glassCount">0 / 8 glasses</p>
+</div>
+
+<div class="card">
+  <h2>😴 Sleep Tracker</h2>
+  <input id="sleepHours" type="number" placeholder="Sleep Hours">
+  <button onclick="checkSleep()">Check Sleep</button>
+  <p id="sleepResult"></p>
+</div>
 <h2>📄 AI Health Report</h2>
 <button onclick="generateReport()">Generate Report</button>
 <p id="report"></p>
@@ -147,6 +159,19 @@ bmiResult.innerHTML+"<br>"+
 anemiaResult.innerHTML+"<br>"+
 waterResult.innerHTML+"<br>"+
 dietResult.innerHTML+"<br><br>Stay hydrated and eat a balanced diet.";
+}
+  let glasses = 0;
+
+function addGlass() {
+  if (glasses < 8) glasses++;
+  document.getElementById("glassCount").innerHTML =
+    glasses + " / 8 glasses";
+}
+
+function checkSleep() {
+  let h = document.getElementById("sleepHours").value;
+  document.getElementById("sleepResult").innerHTML =
+    h >= 7 ? "Great sleep!" : "Sleep at least 7 hours.";
 }
 </script>
 
