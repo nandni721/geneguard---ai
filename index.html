@@ -6,56 +6,12 @@
 <title>GeneGuard AI</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-font-family:Arial,sans-serif;
-background:#070B1F;
-color:white;
-padding:15px;
-}
-.hero{
-background:linear-gradient(135deg,#8B5CF6,#2563EB);
-padding:25px;
-border-radius:20px;
-text-align:center;
-margin-bottom:20px;
-}
-.card{
-background:#111827;
-padding:18px;
-border-radius:16px;
-margin:18px 0;
-box-shadow:0 0 15px rgba(139,92,246,.2);
-}
-input,select{
-width:100%;
-padding:12px;
-margin:8px 0;
-border-radius:10px;
-border:none;
-background:#E5E7EB;
-}
-button{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
-border-radius:12px;
-background:#8B5CF6;
-color:white;
-font-weight:bold;
-}
-.score{
-font-size:28px;
-color:#22C55E;
-font-weight:bold;
-}
-footer{
-text-align:center;
-margin-top:30px;
-color:#A78BFA;
-font-size:13px;
-}
+body{font-family:Arial;background:#0B1020;color:white;padding:20px}
+.hero{background:linear-gradient(135deg,#8B5CF6,#2563EB);padding:20px;border-radius:20px;text-align:center}
+.card{background:#1E293B;padding:18px;border-radius:15px;margin:18px 0}
+input,select,button{width:100%;padding:12px;margin-top:10px;border-radius:10px;border:none}
+button{background:#8B5CF6;color:white;font-weight:bold}
+.score{font-size:30px;color:#22C55E;text-align:center}
 </style>
 </head>
 
@@ -67,7 +23,7 @@ font-size:13px;
 </div>
 
 <div class="card">
-<h2>👤 Personal Health Profile</h2>
+<h2>👤 Health Profile</h2>
 <input id="name" placeholder="Full Name">
 <input id="age" type="number" placeholder="Age">
 <select id="gender">
@@ -75,7 +31,6 @@ font-size:13px;
 <option>Male</option>
 <option>Other</option>
 </select>
-<input id="blood" placeholder="Blood Group (A+, B+, O+, etc)">
 </div>
 
 <div class="card">
@@ -97,81 +52,104 @@ font-size:13px;
 <h2>❤️ AI Health Dashboard</h2>
 <div class="score" id="healthScore">100%</div>
 <p id="waterResult">💧 Water Goal: --</p>
-<p id="dietResult">🥗 AI Diet Recommendation will appear here.</p>
+<p id="dietResult">🥗 Diet recommendation will appear here.</p>
 </div>
 
 <div class="card">
-  <div class="card">
-  <h2>💧 Water Tracker</h2>
-  <button onclick="addGlass()">+1 Glass</button>
-  <p id="glassCount">0 / 8 glasses</p>
+<h2>💧 Water Tracker</h2>
+<button onclick="addGlass()">+1 Glass Water</button>
+<p id="glassCount">0 / 8 Glasses</p>
 </div>
 
 <div class="card">
-  <h2>😴 Sleep Tracker</h2>
-  <input id="sleepHours" type="number" placeholder="Sleep Hours">
-  <button onclick="checkSleep()">Check Sleep</button>
-  <p id="sleepResult"></p>
+<h2>😴 Sleep Tracker</h2>
+<input id="sleepHours" type="number" placeholder="Hours slept today">
+<button onclick="checkSleep()">Check Sleep</button>
+<p id="sleepResult"></p>
 </div>
+
+<div class="card">
+<h2>🚶 Step Tracker</h2>
+<input id="steps" type="number" placeholder="Steps Today">
+<button onclick="checkSteps()">Check Steps</button>
+<p id="stepResult"></p>
+</div>
+
+<div class="card">
+<h2>🔥 Calorie Calculator</h2>
+<button onclick="calculateCalories()">Calculate Calories</button>
+<p id="calorieResult"></p>
+</div>
+
+<div class="card">
 <h2>📄 AI Health Report</h2>
 <button onclick="generateReport()">Generate Report</button>
 <p id="report"></p>
 </div>
 
-<footer>
-© 2026 Nandni • GeneGuard AI • All Rights Reserved
-</footer>
-
 <script>
+let glasses=0;
+
 function calculateBMI(){
-let w=parseFloat(weight.value);
-let h=parseFloat(height.value);
-if(!w||!h){bmiResult.innerHTML="Enter weight & height.";return;}
-let bmi=w/(h*h);
-let status=bmi<18.5?"Underweight":bmi<25?"Normal":bmi<30?"Overweight":"Obese";
-bmiResult.innerHTML="BMI: "+bmi.toFixed(2)+" ("+status+")";
-updateDashboard();
+ let w=parseFloat(weight.value);
+ let h=parseFloat(height.value);
+ if(!w||!h){bmiResult.innerHTML="Enter weight & height";return;}
+ let bmi=w/(h*h);
+ let status=bmi<18.5?"Underweight":bmi<25?"Normal":bmi<30?"Overweight":"Obese";
+ bmiResult.innerHTML="BMI: "+bmi.toFixed(2)+" ("+status+")";
+ updateDashboard();
 }
 
 function checkAnemia(){
-let hbv=parseFloat(hb.value);
-if(!hbv){anemiaResult.innerHTML="Enter hemoglobin.";return;}
-let risk=hbv<11?"🔴 High Risk":hbv<12?"🟡 Medium Risk":"🟢 Low Risk";
-anemiaResult.innerHTML=risk;
-updateDashboard();
+ let hbv=parseFloat(hb.value);
+ if(!hbv){anemiaResult.innerHTML="Enter hemoglobin";return;}
+ let risk=hbv<11?"🔴 High Risk":hbv<12?"🟡 Medium Risk":"🟢 Low Risk";
+ anemiaResult.innerHTML=risk;
+ updateDashboard();
 }
 
 function updateDashboard(){
-let w=parseFloat(weight.value)||0;
-let hbv=parseFloat(hb.value)||12;
-let score=100;
-if(hbv<12)score-=15;
-healthScore.innerHTML=score+"%";
-waterResult.innerHTML="💧 Water Goal: "+((w*35)/1000).toFixed(1)+" L/day";
-dietResult.innerHTML=hbv<12
-?"🥬 Spinach, Beetroot, Dates, Jaggery, Lentils, Vitamin C fruits."
-:"🥗 Balanced vegetarian diet with milk, paneer, dal, fruits & vegetables.";
+ let w=parseFloat(weight.value)||0;
+ let hbv=parseFloat(hb.value)||12;
+ let score=100;
+ if(hbv<12) score-=15;
+ healthScore.innerHTML=score+"%";
+ waterResult.innerHTML="💧 Water Goal: "+((w*35)/1000).toFixed(1)+" L/day";
+
+ if(hbv<12){
+   dietResult.innerHTML="🥬 Eat spinach, beetroot, dates, jaggery, lentils and vitamin C fruits.";
+ }else{
+   dietResult.innerHTML="🥗 Balanced vegetarian diet with milk, paneer, dal, fruits and vegetables.";
+ }
+}
+
+function addGlass(){
+ if(glasses<8) glasses++;
+ glassCount.innerHTML=glasses+" / 8 Glasses";
+}
+
+function checkSleep(){
+ let h=parseFloat(sleepHours.value);
+ sleepResult.innerHTML=h>=7?"😴 Healthy Sleep":"⚠️ Sleep at least 7-8 hours.";
+}
+
+function checkSteps(){
+ let s=parseInt(steps.value);
+ stepResult.innerHTML=s>=8000?"🎉 Great! Goal Completed":"🚶 Walk more to reach 8000 steps.";
+}
+
+function calculateCalories(){
+ let w=parseFloat(weight.value)||0;
+ calorieResult.innerHTML="🔥 Estimated Calories: "+(w*30).toFixed(0)+" kcal/day";
 }
 
 function generateReport(){
-report.innerHTML="<b>"+name.value+"</b><br>"+
-bmiResult.innerHTML+"<br>"+
-anemiaResult.innerHTML+"<br>"+
-waterResult.innerHTML+"<br>"+
-dietResult.innerHTML+"<br><br>Stay hydrated and eat a balanced diet.";
-}
-  let glasses = 0;
-
-function addGlass() {
-  if (glasses < 8) glasses++;
-  document.getElementById("glassCount").innerHTML =
-    glasses + " / 8 glasses";
-}
-
-function checkSleep() {
-  let h = document.getElementById("sleepHours").value;
-  document.getElementById("sleepResult").innerHTML =
-    h >= 7 ? "Great sleep!" : "Sleep at least 7 hours.";
+ report.innerHTML="<b>"+name.value+"'s AI Health Report</b><br><br>"
+ +bmiResult.innerHTML+"<br>"
+ +anemiaResult.innerHTML+"<br>"
+ +waterResult.innerHTML+"<br>"
+ +"Health Score: "+healthScore.innerHTML+"<br>"
+ +dietResult.innerHTML;
 }
 </script>
 
