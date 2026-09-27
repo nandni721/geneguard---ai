@@ -1,76 +1,154 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>GeneGuard AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GeneGuard AI</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:Arial,sans-serif;
+background:#070B1F;
+color:white;
+padding:15px;
+}
+.hero{
+background:linear-gradient(135deg,#8B5CF6,#2563EB);
+padding:25px;
+border-radius:20px;
+text-align:center;
+margin-bottom:20px;
+}
+.card{
+background:#111827;
+padding:18px;
+border-radius:16px;
+margin:18px 0;
+box-shadow:0 0 15px rgba(139,92,246,.2);
+}
+input,select{
+width:100%;
+padding:12px;
+margin:8px 0;
+border-radius:10px;
+border:none;
+background:#E5E7EB;
+}
+button{
+width:100%;
+padding:12px;
+margin-top:10px;
+border:none;
+border-radius:12px;
+background:#8B5CF6;
+color:white;
+font-weight:bold;
+}
+.score{
+font-size:28px;
+color:#22C55E;
+font-weight:bold;
+}
+footer{
+text-align:center;
+margin-top:30px;
+color:#A78BFA;
+font-size:13px;
+}
+</style>
 </head>
 
-<body style="margin:0;background:#0B1020;color:white;font-family:Arial;padding:20px;">
+<body>
 
-  <div style="background:#6D28D9;padding:20px;border-radius:15px;text-align:center;">
-    <h1>🧬 GeneGuard AI</h1>
-    <p>AI-powered Genetic Health & Nutrition Intelligence Platform</p>
-  </div>
+<div class="hero">
+<h1>🧬 GeneGuard AI</h1>
+<p>AI-Powered Genetic Health & Nutrition Intelligence Platform</p>
+</div>
 
-  <h2 style="color:#A78BFA;">⚖ BMI Calculator</h2>
-  <input id="weight" type="number" placeholder="Weight (kg)" style="padding:10px;border-radius:8px;"><br><br>
+<div class="card">
+<h2>👤 Personal Health Profile</h2>
+<input id="name" placeholder="Full Name">
+<input id="age" type="number" placeholder="Age">
+<select id="gender">
+<option>Female</option>
+<option>Male</option>
+<option>Other</option>
+</select>
+<input id="blood" placeholder="Blood Group (A+, B+, O+, etc)">
+</div>
 
-  <input id="height" type="number" placeholder="Height (m)" style="padding:10px;border-radius:8px;"><br><br>
+<div class="card">
+<h2>⚖ BMI Calculator</h2>
+<input id="weight" type="number" placeholder="Weight (kg)">
+<input id="height" type="number" placeholder="Height (m)">
+<button onclick="calculateBMI()">Calculate BMI</button>
+<p id="bmiResult"></p>
+</div>
 
-  <button onclick="calculateBMI()" style="background:#8B5CF6;color:white;padding:10px 20px;border:none;border-radius:8px;">
-    Calculate BMI
-  </button>
+<div class="card">
+<h2>🩸 Anemia Risk Predictor</h2>
+<input id="hb" type="number" placeholder="Hemoglobin (g/dL)">
+<button onclick="checkAnemia()">Check Anemia Risk</button>
+<p id="anemiaResult"></p>
+</div>
 
-  <p id="result"></p>
+<div class="card">
+<h2>❤️ AI Health Dashboard</h2>
+<div class="score" id="healthScore">100%</div>
+<p id="waterResult">💧 Water Goal: --</p>
+<p id="dietResult">🥗 AI Diet Recommendation will appear here.</p>
+</div>
 
-  <hr>
+<div class="card">
+<h2>📄 AI Health Report</h2>
+<button onclick="generateReport()">Generate Report</button>
+<p id="report"></p>
+</div>
 
-  <h2 style="color:#F87171;">🩸 Anemia Risk Predictor</h2>
-  <input id="hb" type="number" placeholder="Hemoglobin (g/dL)" style="padding:10px;border-radius:8px;"><br><br>
+<footer>
+© 2026 Nandni • GeneGuard AI • All Rights Reserved
+</footer>
 
-  <button onclick="checkAnemia()" style="background:#DC2626;color:white;padding:10px 20px;border:none;border-radius:8px;">
-    Check Anemia Risk
-  </button>
+<script>
+function calculateBMI(){
+let w=parseFloat(weight.value);
+let h=parseFloat(height.value);
+if(!w||!h){bmiResult.innerHTML="Enter weight & height.";return;}
+let bmi=w/(h*h);
+let status=bmi<18.5?"Underweight":bmi<25?"Normal":bmi<30?"Overweight":"Obese";
+bmiResult.innerHTML="BMI: "+bmi.toFixed(2)+" ("+status+")";
+updateDashboard();
+}
 
-  <p id="anemiaResult"></p>
+function checkAnemia(){
+let hbv=parseFloat(hb.value);
+if(!hbv){anemiaResult.innerHTML="Enter hemoglobin.";return;}
+let risk=hbv<11?"🔴 High Risk":hbv<12?"🟡 Medium Risk":"🟢 Low Risk";
+anemiaResult.innerHTML=risk;
+updateDashboard();
+}
 
-  <hr>
+function updateDashboard(){
+let w=parseFloat(weight.value)||0;
+let hbv=parseFloat(hb.value)||12;
+let score=100;
+if(hbv<12)score-=15;
+healthScore.innerHTML=score+"%";
+waterResult.innerHTML="💧 Water Goal: "+((w*35)/1000).toFixed(1)+" L/day";
+dietResult.innerHTML=hbv<12
+?"🥬 Spinach, Beetroot, Dates, Jaggery, Lentils, Vitamin C fruits."
+:"🥗 Balanced vegetarian diet with milk, paneer, dal, fruits & vegetables.";
+}
 
-  <h2 style="color:#22C55E;">🥗 AI Diet Recommendation</h2>
-  <p id="diet">Eat protein-rich vegetarian food, fruits and green vegetables.</p>
-
-  <hr>
-
-  <h2 style="color:#38BDF8;">💧 Water Intake Tracker</h2>
-  <p>Daily Goal: <b>2.5 Litres</b></p>
-
-  <hr>
-
-  <h2 style="color:#C084FC;">📊 Health Score</h2>
-  <h1>92%</h1>
-
-  <script>
-    function calculateBMI() {
-      let w = parseFloat(document.getElementById("weight").value);
-      let h = parseFloat(document.getElementById("height").value);
-
-      let bmi = w / (h * h);
-
-      document.getElementById("result").innerHTML =
-        "Your BMI is " + bmi.toFixed(2);
-    }
-
-    function checkAnemia() {
-      let hb = parseFloat(document.getElementById("hb").value);
-
-      if (hb < 11) {
-        document.getElementById("anemiaResult").innerHTML = "🔴 High Anemia Risk";
-      } else if (hb < 12) {
-        document.getElementById("anemiaResult").innerHTML = "🟠 Medium Anemia Risk";
-      } else {
-        document.getElementById("anemiaResult").innerHTML = "🟢 Low Anemia Risk";
-      }
-    }
-  </script>
+function generateReport(){
+report.innerHTML="<b>"+name.value+"</b><br>"+
+bmiResult.innerHTML+"<br>"+
+anemiaResult.innerHTML+"<br>"+
+waterResult.innerHTML+"<br>"+
+dietResult.innerHTML+"<br><br>Stay hydrated and eat a balanced diet.";
+}
+</script>
 
 </body>
 </html>
