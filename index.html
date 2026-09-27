@@ -1,174 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
- content="width=device-width, initial-scale=1.0">
-<title>GeneGuard AI</title>
-<link rel="stylesheet" href="style.css">
-<style>
-body{font-family:Arial;background:#0B1020;color:white;padding:20px}
-.hero{background:linear-gradient(135deg,#8B5CF6,#2563EB);padding:20px;border-radius:20px;text-align:center}
-.card{background:#1E293B;padding:18px;border-radius:15px;margin:18px 0}
-input,select,button{width:100%;padding:12px;margin-top:10px;border-radius:10px;border:none}
-button{background:#8B5CF6;color:white;font-weight:bold}
-.score{font-size:30px;color:#22C55E;text-align:center}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeneGuard AI</title>
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="hero">
-<h1>🧬 GeneGuard AI</h1>
-<p>AI-Powered Genetic Health & Nutrition Intelligence Platform</p>
-</div>
+  <div class="hero">
+    <h1>🧬 GeneGuard AI</h1>
+    <p>AI-Powered Genetic Health & Nutrition Intelligence Platform</p>
+  </div>
 
-<div class="card">
-<h2>👤 Health Profile</h2>
-<input id="name" placeholder="Full Name">
-<input id="age" type="number" placeholder="Age">
-<select id="gender">
-<option>Female</option>
-<option>Male</option>
-<option>Other</option>
-</select>
-</div>
+  <!-- Health Profile -->
+  <div class="card">
+    <h2>👤 Personal Health Profile</h2>
 
-<div class="card">
-<h2>⚖ BMI Calculator</h2>
-<input id="weight" type="number" placeholder="Weight (kg)">
-<input id="height" type="number" placeholder="Height (m)">
-<button onclick="calculateBMI()">Calculate BMI</button>
-<p id="bmiResult"></p>
-</div>
+    <input id="name" placeholder="Full Name">
+    <input id="age" type="number" placeholder="Age">
 
-<div class="card">
-<h2>🩸 Anemia Risk Predictor</h2>
-<input id="hb" type="number" placeholder="Hemoglobin (g/dL)">
-<button onclick="checkAnemia()">Check Anemia Risk</button>
-<p id="anemiaResult"></p>
-</div>
+    <select id="gender">
+      <option>Female</option>
+      <option>Male</option>
+      <option>Other</option>
+    </select>
+  </div>
 
-<div class="card">
-<h2>❤️ AI Health Dashboard</h2>
-<div class="score" id="healthScore">100%</div>
-<p id="waterResult">💧 Water Goal: --</p>
-<p id="dietResult">🥗 Diet recommendation will appear here.</p>
-</div>
- <div class="card">
-<h2>🥗 AI Meal Planner</h2>
+  <!-- BMI -->
+  <div class="card">
+    <h2>⚖️ BMI Calculator</h2>
 
-<button onclick="generateMeal()">Generate My Meal Plan</button>
+    <input id="weight" type="number" placeholder="Weight (kg)">
+    <input id="height" type="number" placeholder="Height (m)">
 
-<p><b>Breakfast:</b> <span id="breakfast">--</span></p>
-<p><b>Lunch:</b> <span id="lunch">--</span></p>
-<p><b>Snacks:</b> <span id="snacks">--</span></p>
-<p><b>Dinner:</b> <span id="dinner">--</span></p>
-</div>
+    <button onclick="calculateBMI()">Calculate BMI</button>
 
-<div class="card">
-<h2>💧 Water Tracker</h2>
-<button onclick="addGlass()">+1 Glass Water</button>
-<p id="glassCount">0 / 8 Glasses</p>
-</div>
+    <p id="bmiResult"></p>
+  </div>
 
-<div class="card">
-<h2>😴 Sleep Tracker</h2>
-<input id="sleepHours" type="number" placeholder="Hours slept today">
-<button onclick="checkSleep()">Check Sleep</button>
-<p id="sleepResult"></p>
-</div>
+  <!-- Anemia -->
+  <div class="card">
+    <h2>🩸 Anemia Risk Predictor</h2>
 
-<div class="card">
-<h2>🚶 Step Tracker</h2>
-<input id="steps" type="number" placeholder="Steps Today">
-<button onclick="checkSteps()">Check Steps</button>
-<p id="stepResult"></p>
-</div>
+    <input id="hb" type="number" placeholder="Hemoglobin (g/dL)">
 
-<div class="card">
-<h2>🔥 Calorie Calculator</h2>
-<button onclick="calculateCalories()">Calculate Calories</button>
-<p id="calorieResult"></p>
-</div>
+    <button onclick="checkAnemia()">Check Anemia Risk</button>
 
-<div class="card">
-<h2>📄 AI Health Report</h2>
-<button onclick="generateReport()">Generate Report</button>
-<p id="report"></p>
-</div>
+    <p id="anemiaResult"></p>
+  </div>
 
-<script>
-let glasses=0;
+  <!-- Dashboard -->
+  <div class="card">
+    <h2>❤️ AI Health Dashboard</h2>
 
-function calculateBMI(){
- let w=parseFloat(weight.value);
- let h=parseFloat(height.value);
- if(!w||!h){bmiResult.innerHTML="Enter weight & height";return;}
- let bmi=w/(h*h);
- let status=bmi<18.5?"Underweight":bmi<25?"Normal":bmi<30?"Overweight":"Obese";
- bmiResult.innerHTML="BMI: "+bmi.toFixed(2)+" ("+status+")";
- updateDashboard();
-}
+    <div class="score" id="healthScore">100%</div>
 
-function checkAnemia(){
- let hbv=parseFloat(hb.value);
- if(!hbv){anemiaResult.innerHTML="Enter hemoglobin";return;}
- let risk=hbv<11?"🔴 High Risk":hbv<12?"🟡 Medium Risk":"🟢 Low Risk";
- anemiaResult.innerHTML=risk;
- updateDashboard();
-}
+    <p id="waterResult">💧 Water Goal: --</p>
 
-function updateDashboard(){
- let w=parseFloat(weight.value)||0;
- let hbv=parseFloat(hb.value)||12;
- let score=100;
- if(hbv<12) score-=15;
- healthScore.innerHTML=score+"%";
- waterResult.innerHTML="💧 Water Goal: "+((w*35)/1000).toFixed(1)+" L/day";
+    <p id="dietResult">🥗 Diet recommendation will appear here.</p>
+  </div>
 
- if(hbv<12){
-   dietResult.innerHTML="🥬 Eat spinach, beetroot, dates, jaggery, lentils and vitamin C fruits.";
- }else{
-   dietResult.innerHTML="🥗 Balanced vegetarian diet with milk, paneer, dal, fruits and vegetables.";
- }
-}
+  <!-- Meal Planner -->
+  <div class="card">
+    <h2>🥗 AI Meal Planner</h2>
 
-function addGlass(){
- if(glasses<8) glasses++;
- glassCount.innerHTML=glasses+" / 8 Glasses";
-}
+    <button onclick="generateMeal()">Generate My Meal Plan</button>
 
-function checkSleep(){
- let h=parseFloat(sleepHours.value);
- sleepResult.innerHTML=h>=7?"😴 Healthy Sleep":"⚠️ Sleep at least 7-8 hours.";
-}
+    <p><b>Breakfast:</b> <span id="breakfast">--</span></p>
+    <p><b>Lunch:</b> <span id="lunch">--</span></p>
+    <p><b>Snacks:</b> <span id="snacks">--</span></p>
+    <p><b>Dinner:</b> <span id="dinner">--</span></p>
+  </div>
 
-function checkSteps(){
- let s=parseInt(steps.value);
- stepResult.innerHTML=s>=8000?"🎉 Great! Goal Completed":"🚶 Walk more to reach 8000 steps.";
-}
+  <!-- Water Tracker -->
+  <div class="card">
+    <h2>💧 Water Tracker</h2>
 
-function calculateCalories(){
- let w=parseFloat(weight.value)||0;
- calorieResult.innerHTML="🔥 Estimated Calories: "+(w*30).toFixed(0)+" kcal/day";
-}
+    <button onclick="addGlass()">+1 Glass Water</button>
 
-function generateReport(){
- report.innerHTML="<b>"+name.value+"'s AI Health Report</b><br><br>"
- +bmiResult.innerHTML+"<br>"
- +anemiaResult.innerHTML+"<br>"
- +waterResult.innerHTML+"<br>"
- +"Health Score: "+healthScore.innerHTML+"<br>"
- +dietResult.innerHTML;
-}
- function generateMeal() {
-  breakfast.innerHTML = "Oats + Banana + Milk";
-  lunch.innerHTML = "Dal + Rice + Salad";
-  snacks.innerHTML = "Dates + Almonds";
-  dinner.innerHTML = "Paneer + Chapati + Vegetables";
- }
-</script>
+    <p id="glassCount">0 / 8 Glasses</p>
+  </div>
 
-</body>
-</html>
+  <!-- Sleep Tracker -->
+  <div class="card">
+    <h2>😴 Sleep Tracker</h2>
+
+    <input id="sleepHours" type="number" placeholder="Hours slept today">
+
+    <button onclick="checkSleep()">Check Sleep</button>
+
+    <p id="sleepResult"></p>
+  </div>
+
+  <!-- Step Tracker -->
+  <div class="card">
+    <h2>🚶 Step Tracker</h2>
+
+    <input id="steps" type="number" placeholder="Steps Today">
+
+    <button onclick="checkSteps()">Check Steps</button>
+
+    <p id="stepResult"></p>
+  </div>
+
+  <!-- Calories -->
+  <div class="card">
+    <h2>🔥
