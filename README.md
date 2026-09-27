@@ -1,29 +1,31 @@
-# 🧬 GeneGuard AI
- Personalized AI-powered health intelligence platform for genetics, nutrition, and wellness
-AI-powered Genetic Health & Nutrition Intelligence Platform
+🧬 GeneGuard AI
 
-## Features
-- BMI Calculator
-- Anemia Risk Prediction
-- AI Diet Planner
-- Water Intake Tracker
-- Health Analytics Dashboard
+AI-Powered Genetic Health & Nutrition Intelligence Platform
 
-## Tech Stack
-- Python
-- FastAPI
-- React
-- Machine Learning
-## Future Features
+GeneGuard AI is a smart healthcare web application that provides personalized health insights based on user inputs such as BMI and hemoglobin levels.
 
-- Genetic Disease Risk Prediction
-- Personalized Nutrition using AI
-- Weekly Health Progress Charts
-- AI Health Dashboard
-  ## Project Modules
+✨ Features
 
-- 🧬 BMI Calculator
-- 🩸 Anemia Risk Predictor
-- 🥗 AI Diet Planner
+- 👤 Personal Health Profile
+- ⚖️ BMI Calculator
+- 🩸 Anemia Risk Prediction
+- ❤️ AI Health Dashboard
+- 🥗 Personalized AI Meal Planner
 - 💧 Water Intake Tracker
-- 📊 Health Dashboard
+- 😴 Sleep Tracker
+- 🚶 Step Tracker
+- 🔥 Calorie Calculator
+- 📄 AI Health Report Generator
+
+🛠️ Tech Stack
+
+- HTML
+- CSS
+- JavaScript
+- GitHub Pages
+
+👩‍💻 Developer
+
+Nandni
+
+© 2026 Nandni — GeneGuard AI. All Rights Reserved.
