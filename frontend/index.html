@@ -1,76 +1,219 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>GeneGuard AI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GeneGuard AI</title>
+
+<style>
+body{
+background:#0B1020;
+font-family:Arial;
+color:white;
+padding:20px;
+text-align:center;
+}
+.card{
+background:#1E293B;
+padding:20px;
+border-radius:15px;
+margin:20px 0;
+}
+input,select{
+width:90%;
+padding:10px;
+margin:8px;
+border-radius:10px;
+border:none;
+}
+button{
+background:#8B5CF6;
+color:white;
+padding:12px 20px;
+border:none;
+border-radius:12px;
+font-size:16px;
+margin-top:10px;
+}
+h1{color:#A855F7;}
+</style>
 </head>
 
-<body style="margin:0;background:#0B1020;color:white;font-family:Arial;padding:20px;">
+<body>
 
-  <div style="background:#6D28D9;padding:20px;border-radius:15px;text-align:center;">
-    <h1>🧬 GeneGuard AI</h1>
-    <p>AI-powered Genetic Health & Nutrition Intelligence Platform</p>
-  </div>
+<h1>🧬 GeneGuard AI</h1>
+<p>AI-Powered Genetic Health & Nutrition Intelligence Platform</p>
 
-  <h2 style="color:#A78BFA;">⚖ BMI Calculator</h2>
-  <input id="weight" type="number" placeholder="Weight (kg)" style="padding:10px;border-radius:8px;"><br><br>
+<div class="card">
+<h2>👤 Health Profile</h2>
 
-  <input id="height" type="number" placeholder="Height (m)" style="padding:10px;border-radius:8px;"><br><br>
+<input id="name" placeholder="Your Name">
 
-  <button onclick="calculateBMI()" style="background:#8B5CF6;color:white;padding:10px 20px;border:none;border-radius:8px;">
-    Calculate BMI
-  </button>
+<input id="age" type="number" placeholder="Age">
 
-  <p id="result"></p>
+<select id="gender">
+<option>Female</option>
+<option>Male</option>
+<option>Other</option>
+</select>
+</div>
 
-  <hr>
+<div class="card">
+<h2>BMI Calculator</h2>
 
-  <h2 style="color:#F87171;">🩸 Anemia Risk Predictor</h2>
-  <input id="hb" type="number" placeholder="Hemoglobin (g/dL)" style="padding:10px;border-radius:8px;"><br><br>
+<input id="weight" type="number" placeholder="Weight (kg)">
+<input id="height" type="number" placeholder="Height (m)">
 
-  <button onclick="checkAnemia()" style="background:#DC2626;color:white;padding:10px 20px;border:none;border-radius:8px;">
-    Check Anemia Risk
-  </button>
+<button onclick="calculateBMI()">Calculate BMI</button>
 
-  <p id="anemiaResult"></p>
+<p id="bmiResult"></p>
+</div>
 
-  <hr>
+<div class="card">
+<h2>🩸 Anemia Risk Prediction</h2>
 
-  <h2 style="color:#22C55E;">🥗 AI Diet Recommendation</h2>
-  <p id="diet">Eat protein-rich vegetarian food, fruits and green vegetables.</p>
+<input id="hb" type="number" placeholder="Hemoglobin (g/dL)">
 
-  <hr>
+<button onclick="checkAnemia()">Check Risk</button>
 
-  <h2 style="color:#38BDF8;">💧 Water Intake Tracker</h2>
-  <p>Daily Goal: <b>2.5 Litres</b></p>
+<p id="anemiaResult"></p>
+</div>
 
-  <hr>
+<div class="card">
+<h2>❤️ AI Health Dashboard</h2>
 
-  <h2 style="color:#C084FC;">📊 Health Score</h2>
-  <h1>92%</h1>
+<h3 id="healthScore">Health Score : 100%</h3>
 
-  <script>
-    function calculateBMI() {
-      let w = parseFloat(document.getElementById("weight").value);
-      let h = parseFloat(document.getElementById("height").value);
+<p id="waterResult">💧 Water Goal : --</p>
 
-      let bmi = w / (h * h);
+<p id="dietResult">🥗 AI Diet Recommendation will appear here.</p>
+</div>
 
-      document.getElementById("result").innerHTML =
-        "Your BMI is " + bmi.toFixed(2);
-    }
+<div class="card">
+<h2>📄 AI Health Report</h2>
 
-    function checkAnemia() {
-      let hb = parseFloat(document.getElementById("hb").value);
+<button onclick="generateReport()">Generate Report</button>
 
-      if (hb < 11) {
-        document.getElementById("anemiaResult").innerHTML = "🔴 High Anemia Risk";
-      } else if (hb < 12) {
-        document.getElementById("anemiaResult").innerHTML = "🟠 Medium Anemia Risk";
-      } else {
-        document.getElementById("anemiaResult").innerHTML = "🟢 Low Anemia Risk";
-      }
-    }
-  </script>
+<p id="report"></p>
+</div>
+
+<script>
+
+function calculateBMI(){
+
+let w=parseFloat(document.getElementById("weight").value);
+
+let h=parseFloat(document.getElementById("height").value);
+
+let bmi=w/(h*h);
+
+let status="";
+
+if(bmi<18.5) status="Underweight";
+else if(bmi<25) status="Normal";
+else if(bmi<30) status="Overweight";
+else status="Obese";
+
+document.getElementById("bmiResult").innerHTML=
+"Your BMI : "+bmi.toFixed(2)+" ("+status+")";
+
+calculateWater();
+updateScore();
+diet();
+}
+
+function checkAnemia(){
+
+let hb=parseFloat(document.getElementById("hb").value);
+
+let risk="";
+
+if(hb<11) risk="🔴 High Anemia Risk";
+else if(hb<12) risk="🟡 Medium Anemia Risk";
+else risk="🟢 Low Anemia Risk";
+
+document.getElementById("anemiaResult").innerHTML=risk;
+
+updateScore();
+diet();
+}
+
+function calculateWater(){
+
+let w=parseFloat(document.getElementById("weight").value);
+
+let water=(w*35)/1000;
+
+document.getElementById("waterResult").innerHTML=
+"💧 Daily Water Goal : "+water.toFixed(2)+" L";
+}
+
+function diet(){
+
+let hb=parseFloat(document.getElementById("hb").value);
+
+let w=parseFloat(document.getElementById("weight").value);
+
+let h=parseFloat(document.getElementById("height").value);
+
+let bmi=w/(h*h);
+
+let text="🥗 Balanced vegetarian diet with fruits, dal, milk and vegetables.";
+
+if(hb<12){
+text="🥬 Iron-rich foods: Spinach, Beetroot, Dates, Jaggery, Lentils, Orange, Amla.";
+}
+
+if(bmi<18.5){
+text+=" Add Paneer, Banana, Nuts and Soybean for healthy weight gain.";
+}
+
+document.getElementById("dietResult").innerHTML=text;
+}
+
+function updateScore(){
+
+let score=100;
+
+let hb=parseFloat(document.getElementById("hb").value);
+
+let w=parseFloat(document.getElementById("weight").value);
+
+let h=parseFloat(document.getElementById("height").value);
+
+let bmi=w/(h*h);
+
+if(hb<12) score-=15;
+
+if(bmi<18.5 || bmi>25) score-=10;
+
+document.getElementById("healthScore").innerHTML=
+"Health Score : "+score+"%";
+}
+
+function generateReport(){
+
+let name=document.getElementById("name").value;
+
+let bmi=document.getElementById("bmiResult").innerHTML;
+
+let anemia=document.getElementById("anemiaResult").innerHTML;
+
+let water=document.getElementById("waterResult").innerHTML;
+
+let diet=document.getElementById("dietResult").innerHTML;
+
+let score=document.getElementById("healthScore").innerHTML;
+
+document.getElementById("report").innerHTML=
+"<b>"+name+"'s AI Health Report</b><br><br>"+
+bmi+"<br>"+anemia+"<br>"+water+"<br>"+score+
+"<br><br>"+diet+
+"<br><br>✅ Stay hydrated and follow a healthy lifestyle.";
+}
+
+</script>
 
 </body>
 </html>
