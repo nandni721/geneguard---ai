@@ -54,6 +54,16 @@ button{background:#8B5CF6;color:white;font-weight:bold}
 <p id="waterResult">💧 Water Goal: --</p>
 <p id="dietResult">🥗 Diet recommendation will appear here.</p>
 </div>
+ <div class="card">
+<h2>🥗 AI Meal Planner</h2>
+
+<button onclick="generateMeal()">Generate My Meal Plan</button>
+
+<p><b>Breakfast:</b> <span id="breakfast">--</span></p>
+<p><b>Lunch:</b> <span id="lunch">--</span></p>
+<p><b>Snacks:</b> <span id="snacks">--</span></p>
+<p><b>Dinner:</b> <span id="dinner">--</span></p>
+</div>
 
 <div class="card">
 <h2>💧 Water Tracker</h2>
@@ -151,6 +161,12 @@ function generateReport(){
  +"Health Score: "+healthScore.innerHTML+"<br>"
  +dietResult.innerHTML;
 }
+ function generateMeal() {
+  breakfast.innerHTML = "Oats + Banana + Milk";
+  lunch.innerHTML = "Dal + Rice + Salad";
+  snacks.innerHTML = "Dates + Almonds";
+  dinner.innerHTML = "Paneer + Chapati + Vegetables";
+ }
 </script>
 
 </body>
