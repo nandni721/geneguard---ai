@@ -1,0 +1,79 @@
+/* GeneGuard AI Premium CSS */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#0B1020;
+  color:white;
+  padding:20px;
+}
+
+.hero{
+  background:linear-gradient(135deg,#8B5CF6,#2563EB);
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.hero h1{
+  font-size:32px;
+  margin-bottom:10px;
+}
+
+.card{
+  background:#1E293B;
+  padding:20px;
+  border-radius:18px;
+  margin:18px 0;
+  box-shadow:0 0 15px rgba(139,92,246,0.25);
+}
+
+h2{
+  color:#C4B5FD;
+  margin-bottom:12px;
+}
+
+input,select{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  border:none;
+  border-radius:10px;
+  background:#E5E7EB;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  background:#8B5CF6;
+  color:white;
+  border:none;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:bold;
+}
+
+button:hover{
+  background:#7C3AED;
+}
+
+.score{
+  font-size:34px;
+  color:#22C55E;
+  text-align:center;
+  margin:10px 0;
+}
+
+footer{
+  text-align:center;
+  margin-top:30px;
+  color:#A78BFA;
+  font-size:14px;
+}
