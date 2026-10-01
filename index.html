@@ -4,109 +4,697 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>GeneGuard AI</title>
 
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- JavaScript -->
+  <script src="script.js" defer></script>
 </head>
 
 <body>
 
-  <div class="hero">
-    <h1>🧬 GeneGuard AI</h1>
-    <p>AI-Powered Genetic Health & Nutrition Intelligence Platform</p>
-  </div>
+  <!-- ============================= -->
+  <!-- HERO SECTION -->
+  <!-- ============================= -->
 
-  <!-- Health Profile -->
-  <div class="card">
-    <h2>👤 Personal Health Profile</h2>
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-icon">🧬</div>
 
-    <input id="name" placeholder="Full Name">
-    <input id="age" type="number" placeholder="Age">
+      <h1>GeneGuard AI</h1>
 
-    <select id="gender">
-      <option>Female</option>
-      <option>Male</option>
-      <option>Other</option>
-    </select>
-  </div>
+      <p>
+        AI-Powered Genetic Health & Nutrition Intelligence Platform
+      </p>
 
-  <!-- BMI -->
-  <div class="card">
-    <h2>⚖️ BMI Calculator</h2>
+      <span class="hero-badge">
+        Smart • Personalized • Health Focused
+      </span>
+    </div>
+  </header>
 
-    <input id="weight" type="number" placeholder="Weight (kg)">
-    <input id="height" type="number" placeholder="Height (m)">
 
-    <button onclick="calculateBMI()">Calculate BMI</button>
+  <main class="container">
 
-    <p id="bmiResult"></p>
-  </div>
+    <!-- ============================= -->
+    <!-- PERSONAL HEALTH PROFILE -->
+    <!-- ============================= -->
 
-  <!-- Anemia -->
-  <div class="card">
-    <h2>🩸 Anemia Risk Predictor</h2>
+    <section class="card profile-card">
 
-    <input id="hb" type="number" placeholder="Hemoglobin (g/dL)">
+      <div class="section-title">
+        <span class="icon">👤</span>
 
-    <button onclick="checkAnemia()">Check Anemia Risk</button>
+        <div>
+          <h2>Personal Health Profile</h2>
+          <p>Enter your basic health information</p>
+        </div>
+      </div>
 
-    <p id="anemiaResult"></p>
-  </div>
+      <div class="form-grid">
 
-  <!-- Dashboard -->
-  <div class="card">
-    <h2>❤️ AI Health Dashboard</h2>
+        <div class="input-group">
+          <label for="name">Full Name</label>
 
-    <div class="score" id="healthScore">100%</div>
+          <input
+            id="name"
+            type="text"
+            placeholder="Enter your name"
+          >
+        </div>
 
-    <p id="waterResult">💧 Water Goal: --</p>
 
-    <p id="dietResult">🥗 Diet recommendation will appear here.</p>
-  </div>
+        <div class="input-group">
+          <label for="age">Age</label>
 
-  <!-- Meal Planner -->
-  <div class="card">
-    <h2>🥗 AI Meal Planner</h2>
+          <input
+            id="age"
+            type="number"
+            placeholder="Enter age"
+            min="1"
+            max="120"
+          >
+        </div>
 
-    <button onclick="generateMeal()">Generate My Meal Plan</button>
 
-    <p><b>Breakfast:</b> <span id="breakfast">--</span></p>
-    <p><b>Lunch:</b> <span id="lunch">--</span></p>
-    <p><b>Snacks:</b> <span id="snacks">--</span></p>
-    <p><b>Dinner:</b> <span id="dinner">--</span></p>
-  </div>
+        <div class="input-group">
+          <label for="gender">Gender</label>
 
-  <!-- Water Tracker -->
-  <div class="card">
-    <h2>💧 Water Tracker</h2>
+          <select id="gender">
 
-    <button onclick="addGlass()">+1 Glass Water</button>
+            <option value="">
+              Select Gender
+            </option>
 
-    <p id="glassCount">0 / 8 Glasses</p>
-  </div>
+            <option value="Female">
+              Female
+            </option>
 
-  <!-- Sleep Tracker -->
-  <div class="card">
-    <h2>😴 Sleep Tracker</h2>
+            <option value="Male">
+              Male
+            </option>
 
-    <input id="sleepHours" type="number" placeholder="Hours slept today">
+            <option value="Other">
+              Other
+            </option>
 
-    <button onclick="checkSleep()">Check Sleep</button>
+          </select>
+        </div>
 
-    <p id="sleepResult"></p>
-  </div>
+      </div>
 
-  <!-- Step Tracker -->
-  <div class="card">
-    <h2>🚶 Step Tracker</h2>
+    </section>
 
-    <input id="steps" type="number" placeholder="Steps Today">
 
-    <button onclick="checkSteps()">Check Steps</button>
+    <!-- ============================= -->
+    <!-- BMI CALCULATOR -->
+    <!-- ============================= -->
 
-    <p id="stepResult"></p>
-  </div>
+    <section class="card">
 
-  <!-- Calories -->
-  <div class="card">
-    <h2>🔥
+      <div class="section-title">
+
+        <span class="icon">⚖️</span>
+
+        <div>
+          <h2>BMI Calculator</h2>
+
+          <p>
+            Calculate your Body Mass Index
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+        <div class="input-group">
+
+          <label for="weight">
+            Weight (kg)
+          </label>
+
+          <input
+            id="weight"
+            type="number"
+            placeholder="e.g. 60"
+            step="0.1"
+            min="1"
+          >
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label for="height">
+            Height (m)
+          </label>
+
+          <input
+            id="height"
+            type="number"
+            placeholder="e.g. 1.65"
+            step="0.01"
+            min="0.5"
+          >
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        onclick="calculateBMI()"
+      >
+        Calculate BMI
+      </button>
+
+
+      <div
+        id="bmiResult"
+        class="result-box"
+      >
+        Enter your details to calculate BMI.
+      </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- ANEMIA RISK -->
+    <!-- ============================= -->
+
+    <section class="card">
+
+      <div class="section-title">
+
+        <span class="icon">🩸</span>
+
+        <div>
+
+          <h2>Anemia Risk Predictor</h2>
+
+          <p>
+            Check risk based on hemoglobin value
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="input-group">
+
+        <label for="hb">
+          Hemoglobin (g/dL)
+        </label>
+
+        <input
+          id="hb"
+          type="number"
+          placeholder="e.g. 12.5"
+          step="0.1"
+          min="1"
+        >
+
+      </div>
+
+
+      <button
+        type="button"
+        onclick="checkAnemia()"
+      >
+        Check Anemia Risk
+      </button>
+
+
+      <div
+        id="anemiaResult"
+        class="result-box"
+      >
+        Enter hemoglobin value to check risk.
+      </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- AI HEALTH DASHBOARD -->
+    <!-- ============================= -->
+
+    <section class="card dashboard-card">
+
+      <div class="section-title">
+
+        <span class="icon">❤️</span>
+
+        <div>
+
+          <h2>AI Health Dashboard</h2>
+
+          <p>
+            Your personalized health overview
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="health-score-container">
+
+        <p>
+          Overall Health Score
+        </p>
+
+        <div
+          id="healthScore"
+          class="score"
+        >
+          100%
+        </div>
+
+      </div>
+
+
+      <div class="dashboard-info">
+
+        <div class="info-box">
+
+          <span>💧</span>
+
+          <p id="waterResult">
+            Daily Water Goal: --
+          </p>
+
+        </div>
+
+
+        <div class="info-box">
+
+          <span>🥗</span>
+
+          <p id="dietResult">
+            Diet recommendation will appear here.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- AI MEAL PLANNER -->
+    <!-- ============================= -->
+
+    <section class="card">
+
+      <div class="section-title">
+
+        <span class="icon">🥗</span>
+
+        <div>
+
+          <h2>AI Meal Planner</h2>
+
+          <p>
+            Generate a simple personalized meal plan
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        onclick="generateMeal()"
+      >
+        Generate My Meal Plan
+      </button>
+
+
+      <div class="meal-plan">
+
+        <div class="meal-item">
+
+          <span>🌅</span>
+
+          <div>
+            <strong>Breakfast</strong>
+
+            <p id="breakfast">
+              --
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="meal-item">
+
+          <span>☀️</span>
+
+          <div>
+            <strong>Lunch</strong>
+
+            <p id="lunch">
+              --
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="meal-item">
+
+          <span>🍎</span>
+
+          <div>
+            <strong>Snacks</strong>
+
+            <p id="snacks">
+              --
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="meal-item">
+
+          <span>🌙</span>
+
+          <div>
+            <strong>Dinner</strong>
+
+            <p id="dinner">
+              --
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- WATER TRACKER -->
+    <!-- ============================= -->
+
+    <section class="card">
+
+      <div class="section-title">
+
+        <span class="icon">💧</span>
+
+        <div>
+
+          <h2>Water Tracker</h2>
+
+          <p>
+            Track your daily water intake
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="tracker-display">
+
+        <div
+          id="glassCount"
+          class="tracker-number"
+        >
+          0 / 8 Glasses
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        onclick="addGlass()"
+      >
+        +1 Glass Water
+      </button>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- SLEEP TRACKER -->
+    <!-- ============================= -->
+
+    <section class="card">
+
+      <div class="section-title">
+
+        <span class="icon">😴</span>
+
+        <div>
+
+          <h2>Sleep Tracker</h2>
+
+          <p>
+            Check your daily sleep duration
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="input-group">
+
+        <label for="sleepHours">
+          Hours Slept Today
+        </label>
+
+        <input
+          id="sleepHours"
+          type="number"
+          placeholder="e.g. 8"
+          step="0.5"
+          min="0"
+          max="24"
+        >
+
+      </div>
+
+
+      <button
+        type="button"
+        onclick="checkSleep()"
+      >
+        Check Sleep
+      </button>
+
+
+      <div
+        id="sleepResult"
+        class="result-box"
+      >
+        Enter your sleep hours.
+      </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- STEP TRACKER -->
+    <!-- ============================= -->
+
+    <section class="card">
+
+      <div class="section-title">
+
+        <span class="icon">🚶</span>
+
+        <div>
+
+          <h2>Step Tracker</h2>
+
+          <p>
+            Track your daily walking goal
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="input-group">
+
+        <label for="steps">
+          Steps Today
+        </label>
+
+        <input
+          id="steps"
+          type="number"
+          placeholder="e.g. 8000"
+          min="0"
+        >
+
+      </div>
+
+
+      <button
+        type="button"
+        onclick="checkSteps()"
+      >
+        Check Steps
+      </button>
+
+
+      <div
+        id="stepResult"
+        class="result-box"
+      >
+        Enter today's steps.
+      </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- CALORIE CALCULATOR -->
+    <!-- ============================= -->
+
+    <section class="card">
+
+      <div class="section-title">
+
+        <span class="icon">🔥</span>
+
+        <div>
+
+          <h2>Calorie Calculator</h2>
+
+          <p>
+            Estimate daily calorie requirement
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        onclick="calculateCalories()"
+      >
+        Calculate Daily Calories
+      </button>
+
+
+      <div
+        id="calorieResult"
+        class="result-box"
+      >
+        Enter your weight above first.
+      </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- AI HEALTH REPORT -->
+    <!-- ============================= -->
+
+    <section class="card report-card">
+
+      <div class="section-title">
+
+        <span class="icon">📊</span>
+
+        <div>
+
+          <h2>AI Health Report</h2>
+
+          <p>
+            Generate your health summary
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        onclick="generateReport()"
+      >
+        Generate AI Health Report
+      </button>
+
+
+      <div
+        id="report"
+        class="report-box"
+      >
+        Your AI health report will appear here.
+      </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- HEALTH DISCLAIMER -->
+    <!-- ============================= -->
+
+    <section class="card disclaimer">
+
+      <h3>⚠️ Important Health Note</h3>
+
+      <p>
+        GeneGuard AI is designed for educational and
+        informational purposes. The results shown by
+        this demo are not a medical diagnosis.
+        For medical concerns, laboratory interpretation,
+        or treatment decisions, consult a qualified
+        healthcare professional.
+      </p>
+
+    </section>
+
+  </main>
+
+
+  <!-- ============================= -->
+  <!-- FOOTER -->
+  <!-- ============================= -->
+
+  <footer class="footer">
+
+    <h3>
+      🧬 GeneGuard AI
+    </h3>
+
+    <p>
+      AI-Powered Genetic Health & Nutrition
+      Intelligence Platform
+    </p>
+
+    <p class="copyright">
+      © 2026 GeneGuard AI. All rights reserved.
+    </p>
+
+  </footer>
+
+
+</body>
+
+</html>
