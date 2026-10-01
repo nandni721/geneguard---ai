@@ -1,136 +1,545 @@
-// GeneGuard AI - Final Script
+// =====================================================
+// GeneGuard AI - Complete Working JavaScript
+// =====================================================
 
 let glasses = 0;
 
-// BMI Calculator
+// =====================================================
+// HELPER FUNCTION
+// =====================================================
+
+function getValue(id) {
+  const element = document.getElementById(id);
+  return element ? element.value : "";
+}
+
+// =====================================================
+// BMI CALCULATOR
+// =====================================================
+
 function calculateBMI() {
-  let w = parseFloat(document.getElementById("weight").value);
-  let h = parseFloat(document.getElementById("height").value);
 
-  if (!w || !h) {
-    document.getElementById("bmiResult").innerHTML =
-      "⚠️ Enter weight and height.";
+  const w = parseFloat(getValue("weight"));
+  const h = parseFloat(getValue("height"));
+
+  const result = document.getElementById("bmiResult");
+
+  if (!w || !h || w <= 0 || h <= 0) {
+    result.innerHTML = "⚠️ Please enter valid weight and height.";
     return;
   }
 
-  let bmi = w / (h * h);
+  const bmi = w / (h * h);
 
-  let status =
-    bmi < 18.5 ? "🟡 Underweight" :
-    bmi < 25 ? "🟢 Normal" :
-    bmi < 30 ? "🟠 Overweight" :
-    "🔴 Obese";
+  let status = "";
 
-  document.getElementById("bmiResult").innerHTML =
-    "BMI: " + bmi.toFixed(2) + " | " + status;
+  if (bmi < 18.5) {
+    status = "🟡 Underweight";
+  } else if (bmi < 25) {
+    status = "🟢 Normal";
+  } else if (bmi < 30) {
+    status = "🟠 Overweight";
+  } else {
+    status = "🔴 Obese";
+  }
+
+  result.innerHTML =
+    "BMI: <b>" + bmi.toFixed(2) + "</b> | " + status;
 
   updateDashboard();
 }
 
-// Anemia Prediction
+
+// =====================================================
+// ANEMIA RISK PREDICTOR
+// =====================================================
+
 function checkAnemia() {
-  let hb = parseFloat(document.getElementById("hb").value);
 
-  if (!hb) {
-    document.getElementById("anemiaResult").innerHTML =
-      "⚠️ Enter hemoglobin value.";
+  const hb = parseFloat(getValue("hb"));
+
+  const result = document.getElementById("anemiaResult");
+
+  if (!hb || hb <= 0) {
+    result.innerHTML =
+      "⚠️ Please enter a valid hemoglobin value.";
     return;
   }
 
-  let risk =
-    hb < 11 ? "🔴 High Anemia Risk" :
-    hb < 12 ? "🟡 Medium Anemia Risk" :
-    "🟢 Low Anemia Risk";
+  let risk = "";
 
-  document.getElementById("anemiaResult").innerHTML = risk;
+  if (hb < 11) {
+    risk = "🔴 High Anemia Risk";
+  } else if (hb < 12) {
+    risk = "🟡 Medium Anemia Risk";
+  } else {
+    risk = "🟢 Low Anemia Risk";
+  }
+
+  result.innerHTML = risk;
 
   updateDashboard();
 }
 
-// Dashboard Update
+
+// =====================================================
+// PERSONALIZED AI DASHBOARD
+// =====================================================
+
 function updateDashboard() {
-  let w = parseFloat(document.getElementById("weight").value) || 50;
-  let hb = parseFloat(document.getElementById("hb").value) || 12;
+
+  const weight =
+    parseFloat(getValue("weight")) || 0;
+
+  const hb =
+    parseFloat(getValue("hb")) || 12;
+
+  const age =
+    parseInt(getValue("age")) || 0;
+
+  const gender =
+    getValue("gender");
+
+
+  // ---------------------------------------------
+  // HEALTH SCORE
+  // ---------------------------------------------
 
   let score = 100;
-  if (hb < 12) score -= 15;
 
-  document.getElementById("healthScore").innerHTML = score + "%";
 
-  document.getElementById("waterResult").innerHTML =
-    "💧 Daily Water Goal: " + ((w * 35) / 1000).toFixed(1) + " L/day";
+  // Anemia effect
+  if (hb < 11) {
+    score -= 25;
+  } else if (hb < 12) {
+    score -= 15;
+  }
 
-  document.getElementById("dietResult").innerHTML =
-    hb < 12
-      ? "🥬 Eat spinach, beetroot, dates, jaggery, lentils and vitamin-C rich fruits."
-      : "🥗 Balanced diet with milk, paneer, dal, fruits and vegetables.";
+
+  // BMI effect
+  if (weight > 0) {
+
+    const height =
+      parseFloat(getValue("height")) || 0;
+
+    if (height > 0) {
+
+      const bmi =
+        weight / (height * height);
+
+      if (bmi < 18.5) {
+        score -= 5;
+      } else if (bmi >= 30) {
+        score -= 10;
+      } else if (bmi >= 25) {
+        score -= 5;
+      }
+    }
+  }
+
+
+  // Sleep effect
+  const sleep =
+    parseFloat(getValue("sleepHours")) || 0;
+
+  if (sleep > 0 && sleep < 7) {
+    score -= 5;
+  }
+
+
+  // Steps effect
+  const steps =
+    parseInt(getValue("steps")) || 0;
+
+  if (steps > 0 && steps < 5000) {
+    score -= 5;
+  }
+
+
+  // Keep score between 0 and 100
+  score = Math.max(0, Math.min(100, score));
+
+
+  const scoreElement =
+    document.getElementById("healthScore");
+
+  if (scoreElement) {
+    scoreElement.innerHTML =
+      score + "%";
+  }
+
+
+  // ---------------------------------------------
+  // PERSONALIZED WATER GOAL
+  // ---------------------------------------------
+
+  if (weight > 0) {
+
+    const water =
+      (weight * 35) / 1000;
+
+    const waterElement =
+      document.getElementById("waterResult");
+
+    if (waterElement) {
+
+      waterElement.innerHTML =
+        "💧 Daily Water Goal: " +
+        water.toFixed(1) +
+        " L/day";
+    }
+  }
+
+
+  // ---------------------------------------------
+  // PERSONALIZED AI DIET
+  // ---------------------------------------------
+
+  const dietElement =
+    document.getElementById("dietResult");
+
+  if (!dietElement) return;
+
+
+  let diet = "";
+
+
+  if (hb < 11) {
+
+    diet =
+      "🩸 Iron-rich plan: Spinach, beetroot, lentils, " +
+      "dates, jaggery and vitamin-C rich fruits.";
+
+  } else if (hb < 12) {
+
+    diet =
+      "🥬 Iron-support plan: Green leafy vegetables, " +
+      "lentils, beans, dates and vitamin-C rich fruits.";
+
+  } else {
+
+    diet =
+      "🥗 Balanced plan: Milk, paneer, dal, " +
+      "whole grains, fruits and vegetables.";
+  }
+
+
+  if (age > 0 && age < 18) {
+
+    diet +=
+      " Include adequate protein and nutritious meals " +
+      "for healthy growth.";
+
+  }
+
+
+  if (gender === "Female") {
+
+    diet +=
+      " Include iron and folate-rich foods regularly.";
+  }
+
+
+  dietElement.innerHTML = diet;
 }
 
-// Water Tracker
+
+// =====================================================
+// WATER TRACKER
+// =====================================================
+
 function addGlass() {
-  if (glasses < 8) glasses++;
 
-  document.getElementById("glassCount").innerHTML =
-    glasses + " / 8 Glasses";
+  if (glasses < 8) {
+    glasses++;
+  }
+
+  const element =
+    document.getElementById("glassCount");
+
+  if (element) {
+
+    element.innerHTML =
+      glasses + " / 8 Glasses 💧";
+  }
+
+
+  updateDashboard();
 }
 
-// Sleep Tracker
+
+// =====================================================
+// SLEEP TRACKER
+// =====================================================
+
 function checkSleep() {
-  let hours = parseFloat(document.getElementById("sleepHours").value);
 
-  document.getElementById("sleepResult").innerHTML =
-    hours >= 7
-      ? "😴 Healthy Sleep! Keep it up."
-      : "⚠️ Sleep at least 7–8 hours daily.";
+  const hours =
+    parseFloat(getValue("sleepHours"));
+
+  const result =
+    document.getElementById("sleepResult");
+
+  if (!hours || hours < 0) {
+
+    result.innerHTML =
+      "⚠️ Please enter your sleep hours.";
+
+    return;
+  }
+
+
+  if (hours >= 8) {
+
+    result.innerHTML =
+      "😴 Excellent! You are getting enough sleep.";
+
+  } else if (hours >= 7) {
+
+    result.innerHTML =
+      "😴 Healthy Sleep! Keep it up.";
+
+  } else if (hours >= 5) {
+
+    result.innerHTML =
+      "🟡 Try to get at least 7–8 hours of sleep.";
+
+  } else {
+
+    result.innerHTML =
+      "🔴 Very low sleep. Aim for 7–8 hours.";
+  }
+
+
+  updateDashboard();
 }
 
-// Step Tracker
+
+// =====================================================
+// STEP TRACKER
+// =====================================================
+
 function checkSteps() {
-  let steps = parseInt(document.getElementById("steps").value);
 
-  document.getElementById("stepResult").innerHTML =
-    steps >= 8000
-      ? "🎉 Goal Completed! Great job."
-      : "🚶 Walk more to reach 8000 steps.";
+  const steps =
+    parseInt(getValue("steps"));
+
+  const result =
+    document.getElementById("stepResult");
+
+  if (isNaN(steps) || steps < 0) {
+
+    result.innerHTML =
+      "⚠️ Please enter your steps.";
+
+    return;
+  }
+
+
+  if (steps >= 10000) {
+
+    result.innerHTML =
+      "🏆 Excellent! 10,000+ steps completed.";
+
+  } else if (steps >= 8000) {
+
+    result.innerHTML =
+      "🎉 Great! Your 8,000-step goal is completed.";
+
+  } else {
+
+    result.innerHTML =
+      "🚶 You have " +
+      (8000 - steps) +
+      " steps left to reach 8,000.";
+  }
+
+
+  updateDashboard();
 }
 
-// Calorie Calculator
+
+// =====================================================
+// CALORIE CALCULATOR
+// =====================================================
+
 function calculateCalories() {
-  let w = parseFloat(document.getElementById("weight").value) || 0;
 
-  let calories = Math.round(w * 30);
+  const weight =
+    parseFloat(getValue("weight"));
 
-  document.getElementById("calorieResult").innerHTML =
-    "🔥 Estimated Daily Calories: " + calories + " kcal";
+  const age =
+    parseInt(getValue("age")) || 25;
+
+  const gender =
+    getValue("gender");
+
+  const result =
+    document.getElementById("calorieResult");
+
+
+  if (!weight || weight <= 0) {
+
+    result.innerHTML =
+      "⚠️ Enter your weight first.";
+
+    return;
+  }
+
+
+  // Simple estimate for this demo
+  let calories =
+    weight * 30;
+
+
+  // Small age adjustment
+  if (age > 50) {
+    calories -= 100;
+  }
+
+
+  if (gender === "Male") {
+    calories += 150;
+  }
+
+
+  calories =
+    Math.max(1200, Math.round(calories));
+
+
+  result.innerHTML =
+    "🔥 Estimated Daily Calories: " +
+    calories +
+    " kcal/day";
 }
 
-// AI Meal Planner
+
+// =====================================================
+// AI MEAL PLANNER
+// =====================================================
+
 function generateMeal() {
-  document.getElementById("breakfast").innerHTML =
-    "🥣 Oats + Banana + Milk";
 
-  document.getElementById("lunch").innerHTML =
-    "🍛 Dal + Rice + Salad";
+  const hb =
+    parseFloat(getValue("hb")) || 12;
 
-  document.getElementById("snacks").innerHTML =
-    "🍎 Dates + Almonds";
 
-  document.getElementById("dinner").innerHTML =
-    "🥗 Paneer + Chapati + Vegetables";
+  if (hb < 12) {
+
+    document.getElementById("breakfast").innerHTML =
+      "🥣 Oats + Banana + Milk";
+
+    document.getElementById("lunch").innerHTML =
+      "🍛 Dal + Spinach + Rice + Salad";
+
+    document.getElementById("snacks").innerHTML =
+      "🍎 Dates + Almonds + Vitamin-C fruit";
+
+    document.getElementById("dinner").innerHTML =
+      "🥗 Paneer + Chapati + Green Vegetables";
+
+  } else {
+
+    document.getElementById("breakfast").innerHTML =
+      "🥣 Oats + Banana + Milk";
+
+    document.getElementById("lunch").innerHTML =
+      "🍛 Dal + Rice + Salad + Vegetables";
+
+    document.getElementById("snacks").innerHTML =
+      "🍎 Fruit + Almonds";
+
+    document.getElementById("dinner").innerHTML =
+      "🥗 Paneer + Chapati + Vegetables";
+  }
 }
 
-// AI Health Report
+
+// =====================================================
+// AI HEALTH REPORT
+// =====================================================
+
 function generateReport() {
-  let name =
-    document.getElementById("name").value || "User";
 
-  document.getElementById("report").innerHTML =
-    "<b>" + name + "'s AI Health Report</b><br><br>" +
-    document.getElementById("bmiResult").innerHTML + "<br>" +
-    document.getElementById("anemiaResult").innerHTML + "<br>" +
-    document.getElementById("waterResult").innerHTML + "<br>" +
-    "❤️ Health Score: " +
-    document.getElementById("healthScore").innerHTML + "<br>" +
-    document.getElementById("dietResult").innerHTML + "<br><br>" +
-    "✅ Stay hydrated and follow a healthy lifestyle.";
+  const name =
+    getValue("name") || "User";
+
+  const bmi =
+    document.getElementById("bmiResult");
+
+  const anemia =
+    document.getElementById("anemiaResult");
+
+  const water =
+    document.getElementById("waterResult");
+
+  const diet =
+    document.getElementById("dietResult");
+
+  const score =
+    document.getElementById("healthScore");
+
+  const report =
+    document.getElementById("report");
+
+
+  report.innerHTML =
+    "<h3>🧬 " +
+    name +
+    "'s AI Health Report</h3>" +
+
+    "<p>⚖️ " +
+    bmi.innerHTML +
+    "</p>" +
+
+    "<p>🩸 " +
+    anemia.innerHTML +
+    "</p>" +
+
+    "<p>" +
+    water.innerHTML +
+    "</p>" +
+
+    "<p>❤️ Health Score: <b>" +
+    score.innerHTML +
+    "</b></p>" +
+
+    "<p>" +
+    diet.innerHTML +
+    "</p>" +
+
+    "<hr>" +
+
+    "<p>💧 Water Intake: " +
+    glasses +
+    " / 8 glasses</p>" +
+
+    "<p>📋 This report is for educational purposes " +
+    "and is not a medical diagnosis.</p>";
 }
+
+
+// =====================================================
+// MAKE FUNCTIONS AVAILABLE TO HTML BUTTONS
+// =====================================================
+
+window.calculateBMI = calculateBMI;
+window.checkAnemia = checkAnemia;
+window.updateDashboard = updateDashboard;
+window.addGlass = addGlass;
+window.checkSleep = checkSleep;
+window.checkSteps = checkSteps;
+window.calculateCalories = calculateCalories;
+window.generateMeal = generateMeal;
+window.generateReport = generateReport;
+
+
+// =====================================================
+// INITIAL DASHBOARD
+// =====================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  updateDashboard();
+
+});
